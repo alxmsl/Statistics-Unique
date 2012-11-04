@@ -2,21 +2,21 @@
 namespace Statistics\Unique;
 
 // append Statistics\Unique autoloader
-spl_autoload_register(array('\Statistics\Unique\Unique', 'autoload'));
+spl_autoload_register(array('\Statistics\Unique\Autoloader', 'autoload'));
 
 /**
  * Base class
  * @author alxmsl
  * @date 10/22/12
  */
-final class Unique {
+final class Autoloader {
     /**
      * @var array array of available classes
      */
     private static $classes = array(
-        'Statistics\\Unique\\Unique'        => 'Unique.php',
+        'Statistics\\Unique\\Autoloader'    => 'Autoloader.php',
         'Statistics\\Unique\\Driver'        => 'Driver.php',
-        'Statistics\\Unique\\RedisInterface'=> 'RedisInterface.php',
+        'Redis\\Client\\RedisInterface'     => 'https://raw.github.com/alxmsl/Redis/master/source/RedisInterface.php',
     );
 
     /**

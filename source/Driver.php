@@ -19,23 +19,14 @@ final class Driver {
     const PREFIX_COUNTER    = 'STATISTICS_COUNTER_';
 
     /**
-     * @var RedisInterface Redis wrapper instance
+     * @var \Redis\Client\RedisInterface Redis wrapper instance
      */
     private $Redis = null;
 
     /**
-     * Getter of Redis wrapper instance
-     * @return RedisInterface Redis wrapper instance
+     * @param \Redis\Client\RedisInterface $Redis Redis wrapper instance
      */
-    private function getRedis() {
-        $this->Redis->reconnect();
-        return $this->Redis;
-    }
-
-    /**
-     * @param RedisInterface $Redis Redis wrapper instance
-     */
-    public function __construct(RedisInterface $Redis) {
+    public function __construct(\Redis\Client\RedisInterface $Redis) {
         $this->Redis = $Redis;
     }
 
@@ -46,10 +37,10 @@ final class Driver {
      */
     public function setEvent($name, $id) {
         $counter = $this->getKey($name);
-        $oldValue = $this->getRedis()->setbit($counter, $id, 1);
+        $oldValue = $this->Redis->setbit($counter, $id, 1);
         if ($oldValue == 0) {
             $counter = $this->getCounterKey($name);
-            $this->getRedis()->incr($counter);
+            $this->Redis->incr($counter);
         }
     }
 
@@ -60,7 +51,7 @@ final class Driver {
      */
     public function getEventCount($name) {
         $counter = $this->getCounterKey($name);
-        return (int) $this->getRedis()->get($counter);
+        return (int) $this->Redis->get($counter);
     }
 
     /**
@@ -73,7 +64,7 @@ final class Driver {
         $key = $this->getKey($name);
         $counter = $this->getCounterKey($name);
         $code = 'return redis.call(\'set\', \'' . $counter . '\', redis.bitcount(\'' . $key . '\'))';
-        return $this->getRedis()->evalSha(sha1($code));
+        return $this->Redis->evalSha(sha1($code));
     }
 
     /**

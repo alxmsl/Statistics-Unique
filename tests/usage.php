@@ -6,21 +6,16 @@
 */
 
 // Firstly include base class
-include('../source/Unique.php');
+include('../source/Autoloader.php');
 
-use \Statistics\Unique\Driver,
-    \Statistics\Unique\RedisInterface;
-
-/**
- * Small wrapper on phpredis for example
- * @see https://github.com/nicolasff/phpredis
- */
-final class RedisClient extends Redis implements RedisInterface {
-    //TODO: you need to implement RedisInterface methods
-}
+use Redis\Client\RedisFactory,
+    Statistics\Unique\Driver;
 
 // Create new Redis client instance
-$Redis = new RedisClient();
+$Redis = \Redis\Client\RedisFactory::createRedisByConfig(array(
+    'host' => 'localhost',
+    'port' => 6379,
+));
 
 // Create driver instance
 $Driver = new Driver($Redis);

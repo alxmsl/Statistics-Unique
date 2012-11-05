@@ -8,6 +8,9 @@
 // Firstly include base class
 include('../source/Autoloader.php');
 
+// Include Redis library base class
+include('lib/Redis/Autoloader.php');
+
 use Redis\Client\RedisFactory,
     Statistics\Unique\Driver;
 

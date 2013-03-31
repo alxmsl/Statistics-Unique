@@ -9,7 +9,7 @@
 include('../source/Autoloader.php');
 
 // Include Redis library base class
-include('lib/Redis/Autoloader.php');
+include('../lib/Redis/source/Autoloader.php');
 
 use Redis\Client\RedisFactory,
     Statistics\Unique\Driver;

@@ -1,0 +1,3 @@
+[submodule "lib/Redis"]
+	path = lib/Redis
+	url = git@github.com:alxmsl/Redis.git
